@@ -1,0 +1,16 @@
+# 7명을 뽑을 조합 라이브러리를 호출
+from itertools import combinations
+
+# 9명을 담을 리스크
+high = [int(input()) for _ in range(9)]
+
+# 9명 중에서 7명의 조합을 뽑자
+seven = combinations(high, 7)
+
+# 7명에서 i 난쟁이를 for문을 돌리면서 더해줌
+for i in seven:
+    if sum(i) == 100:
+        # i의 합이 100이라면 오름차순으로 해서 숫자를 출력한다
+        for num in sorted(i):
+            print(num)
+        break

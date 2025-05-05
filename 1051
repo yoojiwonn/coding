@@ -1,0 +1,12 @@
+N, M = map(int, input().split())
+nums = [input().strip() for _ in range(N)] 
+
+max_side = 1
+
+for i in range(N):
+    for j in range(M):
+        for l in range(1, min(N-i, M-j)):
+            if nums[i][j] == nums[i][j+l] == nums[i+l][j] == nums[i+l][j+l]:
+                max_side = max(max_side,l+1)
+                    
+print(max_side**2)            

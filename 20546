@@ -1,0 +1,42 @@
+def BNP(cash, sales):
+    account = 0
+    for sale in sales:
+        if cash >= sale:
+            account += cash // sale
+            cash = cash % sale
+    return account*sales[-1]+cash
+
+def TIMING(cash, sales):
+    account = 0
+    up = down = 0
+    for i in range(1, len(sales)):
+        # 3일 연속 가격 상승 -> 매도
+        if sales[i]  < sales[i-1]: 
+            up = 0
+            down += 1
+        elif sales[i]  > sales[i-1]: 
+            down = 0
+            up += 1
+        else:
+            up = down = 0
+        # 3일 연속 가격 하락 -> 매수
+        if cash >= sales[i] and down >= 3:
+            account += cash // sales[i] #100/19 -> 5
+            cash = cash % sales[i] 
+        if account > 0 and up >= 3: # 3일연속 가격 상승 -> 매도
+            cash += account * sales[i]
+            account = 0
+
+
+    return account*sales[-1]+cash
+
+
+cash = int(input())
+sales = list(map(int, input().split()))
+
+if BNP(cash, sales) > TIMING(cash, sales):
+    print("BNP")
+elif BNP(cash, sales) < TIMING(cash, sales):
+    print("TIMING")
+else:
+    print("SAMESAME")

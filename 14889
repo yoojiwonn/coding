@@ -1,0 +1,26 @@
+# 입력
+N = int(input()) # N = 6
+S = [list(map(int, input().split())) for _ in range(N)]
+min_diff = 100
+
+# 절반씩 뽑는다.
+from itertools import combinations
+item = [num for num in range(N)] # 012345
+
+for start in combinations(item, N // 2): # start = [0,1,2] link = [3,4,5]
+    link = [x for x in item if x not in start]
+    
+    def team_score(team):
+        score = 0
+        for i in range(len(team)):
+            for j in range(i+1, len(team)):
+                score += S[team[i]][team[j]] + S[team[j]][team[i]]
+        return score
+
+    diff = abs(team_score(start) - team_score(link))
+    min_diff = min(min_diff, diff)
+    
+    if min_diff == 0:
+        break
+
+print(min_diff)
